@@ -1,4 +1,4 @@
-# Spinner
+# Spinner fork from briandowns
 
 [![GoDoc](https://godoc.org/github.com/briandowns/spinner?status.svg)](https://godoc.org/github.com/briandowns/spinner) [![Build Status](https://travis-ci.org/briandowns/spinner.svg?branch=master)](https://travis-ci.org/briandowns/spinner)
 
@@ -11,7 +11,7 @@ Contributions welcome!
 ## Installation
 
 ```bash
-go get github.com/briandowns/spinner
+go get github.com/joshuacrass/spinner
 ```
 
 ## Available Character Sets
@@ -84,7 +84,7 @@ index | character set | sample gif
 package main
 
 import (
-	"github.com/briandowns/spinner"
+	"github.com/joshuacrass/spinner"
 	"time"
 )
 

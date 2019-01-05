@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/briandowns/spinner"
+	"github.com/joshuacrass/spinner"
 )
 
 func main() {

@@ -187,7 +187,7 @@ type Spinner struct {
 
 // New provides a pointer to an instance of Spinner with the supplied options
 func New(cs []string, d time.Duration, options ...Option) *Spinner {
-	s:= &Spinner{
+	s := &Spinner{
 		Delay:    d,
 		chars:    cs,
 		color:    color.New(color.FgWhite).SprintFunc(),
@@ -207,8 +207,8 @@ func New(cs []string, d time.Duration, options ...Option) *Spinner {
 type Option func(*Spinner)
 
 type Options struct {
-	Color string
-	Suffix string
+	Color    string
+	Suffix   string
 	FinalMSG string
 }
 
@@ -353,16 +353,31 @@ func (s *Spinner) erase() {
 		return
 	}
 	del, _ := hex.DecodeString("7f")
-	for _, c := range []string{
-		"\b",
-		string(del),
-		"\b",
-		"\033[K", // for macOS Terminal
-	} {
-		for i := 0; i < n; i++ {
-			fmt.Fprintf(s.Writer, c)
+	// Found formatting issues when running in linux GNU Screen
+	// This "\033[2K\r" and removing "\b" before and after
+	// the string resolved the issue.
+	if runtime.GOOS == "linux" {
+		for _, c := range []string{
+			string(del),
+			"\033[2K\r", // for linux GNU Screen
+		} {
+			for i := 0; i < n; i++ {
+				fmt.Fprintf(s.Writer, c)
+			}
+		}
+	} else {
+		for _, c := range []string{
+			"\b",
+			string(del),
+			"\b",
+			"\033[K", // for macOS Terminal
+		} {
+			for i := 0; i < n; i++ {
+				fmt.Fprintf(s.Writer, c)
+			}
 		}
 	}
+
 	s.lastOutput = ""
 }
 
